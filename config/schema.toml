@@ -60,6 +60,13 @@ path = "config/tuwunel.toml"
   de = "Offene Registrierung mit Passwort. Aus: Konten kommen von Kanidm."
 
   [[file.field]]
+  key = "global.registration.grant_admin_to_first_user"
+  type = "boolean"
+  default = "false"
+  en = "Upstream default is true: the first account on a new server becomes server admin. Off: admins are set on purpose with `!admin users make-user-admin <username>`."
+  de = "Standard des Herstellers ist true: das erste Konto auf einem neuen Server wird Server-Admin. Aus: Admins werden mit `!admin users make-user-admin <Benutzername>` ausdrücklich gesetzt."
+
+  [[file.field]]
   key = "global.telemetry.sentry.enable"
   type = "boolean"
   default = "false"
@@ -94,6 +101,20 @@ path = "config/tuwunel.toml"
   vault = "fs/tuwunel/domain"
   en = "Callback URL registered with Kanidm; must be exactly `/_matrix/client/unstable/login/sso/callback/<client_id>`."
   de = "Callback-URL, bei Kanidm eingetragen; muss genau `/_matrix/client/unstable/login/sso/callback/<client_id>` sein."
+
+  [[file.field]]
+  key = "global.identity_provider.userid_claims"
+  type = "list"
+  default = '["preferred_username"]'
+  en = "Claim used for the Matrix user name. With the Kanidm client set to the short username, preferred_username is a valid Matrix name."
+  de = "Angabe, aus der der Matrix-Benutzername gebildet wird. Ist der Kanidm-Client auf den Kurznamen gestellt, ist preferred_username ein gültiger Matrix-Name."
+
+  [[file.field]]
+  key = "global.identity_provider.unique_id_fallbacks"
+  type = "boolean"
+  default = "false"
+  en = "Off: no generated random names when a claim is unusable; registration fails with an error instead."
+  de = "Aus: keine erzeugten Zufallsnamen, wenn eine Angabe unbrauchbar ist; die Registrierung scheitert stattdessen mit einem Fehler."
 
   [[file.field]]
   key = "global.identity_provider.scope"

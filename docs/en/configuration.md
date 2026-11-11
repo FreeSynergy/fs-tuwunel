@@ -12,9 +12,12 @@ Public default configuration in `config/tuwunel.toml`. It holds placeholders onl
 | `global.rocksdb.direct_io` | boolean | `false` | no | RocksDB direct I/O. Off because the data directory is on ZFS (upstream advises false on ZFS and on file systems without direct I/O). |
 | `global.database.pool.max_workers` | integer | `256` | no | Upper limit of the database worker threads in total. Upstream allows up to 2048 (default per worker pool: 4 times the CPU threads, clamped to 32..1024); on a large host that exceeded a container's default task limit and stopped the start with os error 11. Raise it together with the task limit. |
 | `global.registration.enable` | boolean | `false` | no | Open password registration. Off: accounts come from Kanidm. |
+| `global.registration.grant_admin_to_first_user` | boolean | `false` | no | Upstream default is true: the first account on a new server becomes server admin. Off: admins are set on purpose with `!admin users make-user-admin <username>`. |
 | `global.telemetry.sentry.enable` | boolean | `false` | no | Sentry error reporting (compiled into default builds). Stays off. |
 | `global.identity_provider.client_id` | string | `tuwunel` | no | OAuth2 client name registered in Kanidm. |
 | `global.identity_provider.client_secret_file` | path | - | yes (from vault: `fs/tuwunel/oidc-client-secret#file`) | File with the OAuth2 client secret. The vault writes the file; the path in the template is a placeholder. |
 | `global.identity_provider.issuer_url` | string | - | no | Issuer URL of the Kanidm OIDC client (`/oauth2/openid/tuwunel`); Kanidm's domain from the vault (not a secret). |
 | `global.identity_provider.callback_url` | string | - | no | Callback URL registered with Kanidm; must be exactly `/_matrix/client/unstable/login/sso/callback/<client_id>`. |
+| `global.identity_provider.userid_claims` | list | `["preferred_username"]` | no | Claim used for the Matrix user name. With the Kanidm client set to the short username, preferred_username is a valid Matrix name. |
+| `global.identity_provider.unique_id_fallbacks` | boolean | `false` | no | Off: no generated random names when a claim is unusable; registration fails with an error instead. |
 | `global.identity_provider.scope` | list | `["openid", "profile", "email"]` | no | Requested OIDC scopes. |

@@ -12,9 +12,12 @@
 | `global.rocksdb.direct_io` | boolean | `false` | nein | Direct I/O von RocksDB. Aus, weil das Datenverzeichnis auf ZFS liegt (der Hersteller rät dort zu false, ebenso bei Dateisystemen ohne Direct I/O). |
 | `global.database.pool.max_workers` | integer | `256` | nein | Obergrenze der Datenbank-Arbeitsthreads insgesamt. Der Hersteller erlaubt bis zu 2048 (Standard je Pool: das Vierfache der CPU-Threads, begrenzt auf 32 bis 1024); auf einem großen Rechner überstieg das das Standard-Aufgabenlimit eines Containers, und der Start brach mit os error 11 ab. Nur zusammen mit dem Aufgabenlimit erhöhen. |
 | `global.registration.enable` | boolean | `false` | nein | Offene Registrierung mit Passwort. Aus: Konten kommen von Kanidm. |
+| `global.registration.grant_admin_to_first_user` | boolean | `false` | nein | Standard des Herstellers ist true: das erste Konto auf einem neuen Server wird Server-Admin. Aus: Admins werden mit `!admin users make-user-admin <Benutzername>` ausdrücklich gesetzt. |
 | `global.telemetry.sentry.enable` | boolean | `false` | nein | Sentry-Fehlerberichte (in Standard-Builds enthalten). Bleiben aus. |
 | `global.identity_provider.client_id` | string | `tuwunel` | nein | OAuth2-Client-Name, in Kanidm eingetragen. |
 | `global.identity_provider.client_secret_file` | path | - | ja (aus dem Tresor: `fs/tuwunel/oidc-client-secret#file`) | Datei mit dem OAuth2-Client-Geheimnis. Der Tresor schreibt die Datei; der Pfad im Muster ist ein Platzhalter. |
 | `global.identity_provider.issuer_url` | string | - | nein | Issuer-URL des Kanidm-OIDC-Clients (`/oauth2/openid/tuwunel`); Kanidm-Domain aus dem Tresor (kein Geheimnis). |
 | `global.identity_provider.callback_url` | string | - | nein | Callback-URL, bei Kanidm eingetragen; muss genau `/_matrix/client/unstable/login/sso/callback/<client_id>` sein. |
+| `global.identity_provider.userid_claims` | list | `["preferred_username"]` | nein | Angabe, aus der der Matrix-Benutzername gebildet wird. Ist der Kanidm-Client auf den Kurznamen gestellt, ist preferred_username ein gültiger Matrix-Name. |
+| `global.identity_provider.unique_id_fallbacks` | boolean | `false` | nein | Aus: keine erzeugten Zufallsnamen, wenn eine Angabe unbrauchbar ist; die Registrierung scheitert stattdessen mit einem Fehler. |
 | `global.identity_provider.scope` | list | `["openid", "profile", "email"]` | nein | Angeforderte OIDC-Bereiche. |

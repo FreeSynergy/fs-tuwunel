@@ -32,6 +32,9 @@ max_workers = 256
 # Accounts come from the login service (Kanidm, single sign-on): no open registration.
 [global.registration]
 enable = false
+# Nobody becomes admin by being first (default is true: the first account on a new server would silently become server admin).
+# Admins are set on purpose: `!admin users make-user-admin <username>` (docs/en/known-limits.md).
+grant_admin_to_first_user = false
 
 # Default builds contain Sentry reporting; it stays off.
 [global.telemetry.sentry]
@@ -48,3 +51,8 @@ callback_url = "https://${vault:fs/tuwunel/domain}/_matrix/client/unstable/login
 scope = ["openid", "profile", "email"]
 default = true
 registration = true
+# The Matrix name comes from ONE fixed claim. The Kanidm client is set to the short username (`kanidm system oauth2
+# prefer-short-username tuwunel`), so preferred_username is e.g. `anna`, not `anna@idm.example.org` (invalid as a Matrix name).
+userid_claims = ["preferred_username"]
+# No random fallback names: an unusable claim is an error, not a silently generated account.
+unique_id_fallbacks = false
