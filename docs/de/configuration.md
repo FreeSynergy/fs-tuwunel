@@ -9,6 +9,8 @@
 | `global.http.listen.address` | list | `["127.0.0.1"]` | nein | Lausch-Adressen; nur Loopback, weil Zentinel das öffentliche Tor ist. |
 | `global.http.listen.port` | list | `[8008]` | nein | Lausch-Ports. |
 | `global.well_known.client` | string | - | nein | Öffentliche Client-URL für die Matrix-Erkennung. Domain aus dem Tresor (kein Geheimnis). |
+| `global.rocksdb.direct_io` | boolean | `false` | nein | Direct I/O von RocksDB. Aus, weil das Datenverzeichnis auf ZFS liegt (der Hersteller rät dort zu false, ebenso bei Dateisystemen ohne Direct I/O). |
+| `global.database.pool.max_workers` | integer | `256` | nein | Obergrenze der Datenbank-Arbeitsthreads. Der Standard des Herstellers liegt bei bis zu 2048 und übersteigt das Standard-Aufgabenlimit eines Containers; der Start bricht mit os error 11 ab. Nur zusammen mit dem Aufgabenlimit erhöhen. |
 | `global.registration.enable` | boolean | `false` | nein | Offene Registrierung mit Passwort. Aus: Konten kommen von Kanidm. |
 | `global.telemetry.sentry.enable` | boolean | `false` | nein | Sentry-Fehlerberichte (in Standard-Builds enthalten). Bleiben aus. |
 | `global.identity_provider.client_id` | string | `tuwunel` | nein | OAuth2-Client-Name, in Kanidm eingetragen. |
