@@ -1,0 +1,38 @@
+# FreeSynergy.Tuwunel: public default configuration (Tuwunel 2.x, organised in tables).
+# TEMPLATE: ${vault:...} placeholders are replaced from the vault (ADR 0067) when the file is rendered on the server.
+# No secret value is ever stored in this repository (ADR 0054).
+
+[global]
+# Cannot be changed after the first start without wiping the database.
+server_name = "${vault:fs/tuwunel/server-name}"
+# All data lives under /srv/freesynergy (encrypted, backed up).
+database_path = "/srv/freesynergy/tuwunel/db"
+
+# Behind Zentinel on the same host: listen on the loopback only.
+[global.http.listen]
+address = ["127.0.0.1"]
+port = [8008]
+
+# Matrix client discovery (/.well-known/matrix/client).
+[global.well_known]
+client = "https://${vault:fs/tuwunel/domain}"
+
+# Accounts come from the login service (Kanidm, single sign-on): no open registration.
+[global.registration]
+enable = false
+
+# Default builds contain Sentry reporting; it stays off.
+[global.telemetry.sentry]
+enable = false
+
+# Sign-in with Kanidm (OpenID Connect). The client is registered in Kanidm under the name `tuwunel`.
+[[global.identity_provider]]
+brand = "kanidm"
+name = "FreeSynergy login"
+client_id = "tuwunel"
+client_secret_file = "${vault:fs/tuwunel/oidc-client-secret#file}"
+issuer_url = "https://${vault:fs/kanidm/domain}/oauth2/openid/tuwunel"
+callback_url = "https://${vault:fs/tuwunel/domain}/_matrix/client/unstable/login/sso/callback/tuwunel"
+scope = ["openid", "profile", "email"]
+default = true
+registration = true

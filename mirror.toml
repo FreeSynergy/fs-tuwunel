@@ -1,0 +1,62 @@
+# Mirror description (ADR 0068): what we publish, where it comes from, how it was checked and signed.
+# Read by scripts/repo_tool.py and .github/workflows/mirror.yml. Nothing in here is a secret.
+
+[repo]
+name = "fs-tuwunel"
+adr = ["0068", "0067", "0054", "0015"]
+
+[upstream]
+name = "Tuwunel"
+version = "2.0.0"
+released = "2026-11-10"
+license = "Apache-2.0"
+homepage = "https://matrix-construct.github.io/tuwunel/"
+repository = "https://github.com/matrix-construct/tuwunel"
+
+# The release files on GitHub (.deb, .rpm, binaries, containers) carry no signature, only GitHub's own SHA-256 digests; the
+# tag v2.0.0 and its commit are unsigned (checked 2026-11-11). A digest from the same server is no provenance, so those
+# files are not taken over. We build from the pinned source ourselves and sign with our own key.
+[source]
+repository = "https://github.com/matrix-construct/tuwunel"
+tag = "v2.0.0"
+tag_signed = false
+tag_object = "37b1d711299e075b1c71b6423a284698c68ec679"
+commit = "a3feae1a26ec764ee88606c2c68b659a9b5fba8d"
+check = "tag-resolves-to-pinned-commit"
+
+[build]
+where = "GitHub Actions, .github/workflows/mirror.yml (never on a developer machine)"
+features = "default (as upstream release builds since 2.0)"
+fork = "FreeSynergy/tuwunel"          # build-only fork (ADR 0015); no changes; fixes go upstream
+targets = ["x86_64-unknown-linux-gnu"]
+
+[signing]
+method = "OpenPGP detached (.asc) per file, plus SHA256SUMS.txt; SLSA build provenance by GitHub"
+key_fingerprint = "16A4A3EE563AEF51FCF0C55DED7B57C4A1904342"   # FreeSynergy Release, same key as fs-release and fs-catalog
+public_key = "https://github.com/FreeSynergy/fs-release/blob/main/release-signing-key.asc"
+
+[[artifact]]
+name = "tuwunel-2.0.0-linux-x86_64.tar.gz"
+kind = "binary"
+contents = "tuwunel, tuwunel-example.toml, LICENSE"
+verification = "built-from-pinned-commit"
+
+[[artifact]]
+name = "tuwunel-2.0.0-source.tar.gz"
+kind = "source"
+contents = "git archive of the pinned commit (Apache-2.0: source of the same version travels with the binary)"
+verification = "built-from-pinned-commit"
+
+[[artifact]]
+name = "tuwunel-2.0.0.spdx.json"
+kind = "sbom"
+verification = "generated-from-Cargo.lock"
+
+[[artifact]]
+name = "LICENSE-Apache-2.0"
+kind = "licence"
+verification = "copied-from-pinned-commit"
+
+[not_mirrored]
+github_release_files = "v2.0.0-assets .deb/.rpm/.zst/container files: unsigned, digest from the same server only. Not taken over."
+apt_repository = "apt.f.dog (key 84C85648742584A1341BF7912090E8468CAFCD62, Release signed, checked) offers stable 1.9.4 only (2026-10-10), not 2.0.0. Possible source for older versions; not used."

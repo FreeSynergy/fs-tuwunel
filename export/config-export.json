@@ -1,0 +1,170 @@
+{
+  "format": 1,
+  "repo": "fs-tuwunel",
+  "program": "Tuwunel",
+  "version": "2.0.0",
+  "capabilities": [
+    {
+      "tag": "messaging.matrix",
+      "relation": "provides",
+      "support": "yes"
+    },
+    {
+      "tag": "messaging.matrix.oidc-server",
+      "relation": "provides",
+      "support": "yes"
+    },
+    {
+      "tag": "identity.oidc",
+      "relation": "recommends",
+      "support": "yes"
+    },
+    {
+      "tag": "identity.ldap",
+      "relation": "recommends",
+      "support": "yes"
+    },
+    {
+      "tag": "identity.oauth2",
+      "relation": "provides",
+      "support": "no"
+    },
+    {
+      "tag": "identity.radius",
+      "relation": "provides",
+      "support": "no"
+    },
+    {
+      "tag": "identity.pam",
+      "relation": "provides",
+      "support": "no"
+    },
+    {
+      "tag": "identity.ssh-keys",
+      "relation": "provides",
+      "support": "no"
+    },
+    {
+      "tag": "identity.passkeys",
+      "relation": "provides",
+      "support": "no"
+    },
+    {
+      "tag": "identity.scim",
+      "relation": "provides",
+      "support": "no"
+    }
+  ],
+  "files": [
+    {
+      "path": "config/tuwunel.toml",
+      "sha256": "babed5ed4e6d1a61e444fa5b43621460a25beb2d2179b125a103c7255067f4e2",
+      "placeholders": [
+        "...",
+        "fs/kanidm/domain",
+        "fs/tuwunel/domain",
+        "fs/tuwunel/oidc-client-secret#file",
+        "fs/tuwunel/server-name"
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.server_name",
+      "type": "string",
+      "default": null,
+      "secret": false,
+      "vault": "fs/tuwunel/server-name"
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.database_path",
+      "type": "path",
+      "default": "/srv/freesynergy/tuwunel/db",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.http.listen.address",
+      "type": "list",
+      "default": "[\"127.0.0.1\"]",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.http.listen.port",
+      "type": "list",
+      "default": "[8008]",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.well_known.client",
+      "type": "string",
+      "default": null,
+      "secret": false,
+      "vault": "fs/tuwunel/domain"
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.registration.enable",
+      "type": "boolean",
+      "default": "false",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.telemetry.sentry.enable",
+      "type": "boolean",
+      "default": "false",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.identity_provider.client_id",
+      "type": "string",
+      "default": "tuwunel",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.identity_provider.client_secret_file",
+      "type": "path",
+      "default": null,
+      "secret": true,
+      "vault": "fs/tuwunel/oidc-client-secret#file"
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.identity_provider.issuer_url",
+      "type": "string",
+      "default": null,
+      "secret": false,
+      "vault": "fs/kanidm/domain"
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.identity_provider.callback_url",
+      "type": "string",
+      "default": null,
+      "secret": false,
+      "vault": "fs/tuwunel/domain"
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.identity_provider.scope",
+      "type": "list",
+      "default": "[\"openid\", \"profile\", \"email\"]",
+      "secret": false,
+      "vault": null
+    }
+  ],
+  "note": "Configuration export without secrets. Secret values are never stored here; each placeholder names a vault path (ADR 0067)."
+}

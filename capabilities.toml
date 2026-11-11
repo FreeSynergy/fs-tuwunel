@@ -1,0 +1,82 @@
+# Capability tags (ADR 0068). relation: provides | requires | recommends. support: yes | no | unstable.
+# Names follow the topic interfaces (fs-interfaces, thread T) and stay provisional until that list is final.
+
+[package]
+id = "fs-tuwunel"
+upstream = "Tuwunel"
+version = "2.0.0"
+checked = "2026-11-11"
+
+[[capability]]
+tag = "messaging.matrix"
+relation = "provides"
+support = "yes"
+source = "https://github.com/matrix-construct/tuwunel/blob/v2.0.0/README.md"
+text_en = "Matrix homeserver (client-server and federation APIs, end-to-end encrypted rooms, MatrixRTC support)."
+text_de = "Matrix-Heimserver (Client-Server- und Föderations-API, Ende-zu-Ende-verschlüsselte Räume, MatrixRTC-Unterstützung)."
+
+[[capability]]
+tag = "messaging.matrix.oidc-server"
+relation = "provides"
+support = "yes"
+source = "https://github.com/matrix-construct/tuwunel/blob/v2.0.0/docs/authentication/oidc-server.md"
+text_en = "Built-in OAuth 2.0 / OpenID Connect authorisation server for Matrix clients only; it is not a login service for other programs."
+text_de = "Eingebauter OAuth-2.0-/OpenID-Connect-Server nur für Matrix-Clients; kein Anmeldedienst für andere Programme."
+
+[[capability]]
+tag = "identity.oidc"
+relation = "recommends"
+support = "yes"
+source = "https://github.com/matrix-construct/tuwunel/blob/v2.0.0/docs/authentication/providers.md"
+text_en = "Single sign-on through an upstream OIDC provider (documented for GitHub, Google, Keycloak, Authelia, Authentik, MAS; Kanidm is not in the list and is tested by this repository)."
+text_de = "Anmeldung über einen vorgeschalteten OIDC-Anbieter (dokumentiert für GitHub, Google, Keycloak, Authelia, Authentik, MAS; Kanidm steht nicht in der Liste und wird von diesem Repo getestet)."
+
+[[capability]]
+tag = "identity.ldap"
+relation = "recommends"
+support = "yes"
+source = "https://github.com/matrix-construct/tuwunel/blob/v2.0.0/docs/authentication/ldap.md"
+text_en = "Password sign-in against an LDAP directory (Tuwunel uses LDAP; it does not offer an LDAP server). Compile-time feature, on in default builds."
+text_de = "Passwort-Anmeldung gegen ein LDAP-Verzeichnis (Tuwunel nutzt LDAP, bietet keinen LDAP-Server an). Build-Feature, in Standard-Builds an."
+
+[[capability]]
+tag = "identity.oauth2"
+relation = "provides"
+support = "no"
+text_en = "Not offered as a login service for other programs (see messaging.matrix.oidc-server)."
+text_de = "Wird nicht als Anmeldedienst für andere Programme angeboten (siehe messaging.matrix.oidc-server)."
+
+[[capability]]
+tag = "identity.radius"
+relation = "provides"
+support = "no"
+text_en = "Not offered."
+text_de = "Wird nicht angeboten."
+
+[[capability]]
+tag = "identity.pam"
+relation = "provides"
+support = "no"
+text_en = "Not offered."
+text_de = "Wird nicht angeboten."
+
+[[capability]]
+tag = "identity.ssh-keys"
+relation = "provides"
+support = "no"
+text_en = "Not offered."
+text_de = "Wird nicht angeboten."
+
+[[capability]]
+tag = "identity.passkeys"
+relation = "provides"
+support = "no"
+text_en = "Not offered; sign-in goes through the identity provider."
+text_de = "Wird nicht angeboten; die Anmeldung läuft über den Identitätsanbieter."
+
+[[capability]]
+tag = "identity.scim"
+relation = "provides"
+support = "no"
+text_en = "Nothing documented in 2.0.0."
+text_de = "In 2.0.0 nichts dokumentiert."

@@ -1,0 +1,89 @@
+# Describes the fields of the config files: documentation, export and secret check come from here.
+
+[[file]]
+path = "config/tuwunel.toml"
+
+  [[file.field]]
+  key = "global.server_name"
+  type = "string"
+  vault = "fs/tuwunel/server-name"
+  en = "Name of the Matrix server (suffix of user and room ids). Cannot change after the first start without wiping the database. Not a secret; differs per installation."
+  de = "Name des Matrix-Servers (Endung der Nutzer- und Raum-IDs). Lässt sich nach dem ersten Start nur mit Löschen der Datenbank ändern. Kein Geheimnis; je Installation verschieden."
+
+  [[file.field]]
+  key = "global.database_path"
+  type = "path"
+  default = "/srv/freesynergy/tuwunel/db"
+  en = "Directory for all data including media."
+  de = "Verzeichnis für alle Daten einschließlich Medien."
+
+  [[file.field]]
+  key = "global.http.listen.address"
+  type = "list"
+  default = '["127.0.0.1"]'
+  en = "Listen addresses; loopback, because Zentinel is the public gate."
+  de = "Lausch-Adressen; nur Loopback, weil Zentinel das öffentliche Tor ist."
+
+  [[file.field]]
+  key = "global.http.listen.port"
+  type = "list"
+  default = "[8008]"
+  en = "Listen ports."
+  de = "Lausch-Ports."
+
+  [[file.field]]
+  key = "global.well_known.client"
+  type = "string"
+  vault = "fs/tuwunel/domain"
+  en = "Public client URL for Matrix discovery. Domain from the vault (not a secret)."
+  de = "Öffentliche Client-URL für die Matrix-Erkennung. Domain aus dem Tresor (kein Geheimnis)."
+
+  [[file.field]]
+  key = "global.registration.enable"
+  type = "boolean"
+  default = "false"
+  en = "Open password registration. Off: accounts come from Kanidm."
+  de = "Offene Registrierung mit Passwort. Aus: Konten kommen von Kanidm."
+
+  [[file.field]]
+  key = "global.telemetry.sentry.enable"
+  type = "boolean"
+  default = "false"
+  en = "Sentry error reporting (compiled into default builds). Stays off."
+  de = "Sentry-Fehlerberichte (in Standard-Builds enthalten). Bleiben aus."
+
+  [[file.field]]
+  key = "global.identity_provider.client_id"
+  type = "string"
+  default = "tuwunel"
+  en = "OAuth2 client name registered in Kanidm."
+  de = "OAuth2-Client-Name, in Kanidm eingetragen."
+
+  [[file.field]]
+  key = "global.identity_provider.client_secret_file"
+  type = "path"
+  secret = true
+  vault = "fs/tuwunel/oidc-client-secret#file"
+  en = "File with the OAuth2 client secret. The vault writes the file; the path in the template is a placeholder."
+  de = "Datei mit dem OAuth2-Client-Geheimnis. Der Tresor schreibt die Datei; der Pfad im Muster ist ein Platzhalter."
+
+  [[file.field]]
+  key = "global.identity_provider.issuer_url"
+  type = "string"
+  vault = "fs/kanidm/domain"
+  en = "Issuer URL of the Kanidm OIDC client (`/oauth2/openid/tuwunel`); Kanidm's domain from the vault (not a secret)."
+  de = "Issuer-URL des Kanidm-OIDC-Clients (`/oauth2/openid/tuwunel`); Kanidm-Domain aus dem Tresor (kein Geheimnis)."
+
+  [[file.field]]
+  key = "global.identity_provider.callback_url"
+  type = "string"
+  vault = "fs/tuwunel/domain"
+  en = "Callback URL registered with Kanidm; must be exactly `/_matrix/client/unstable/login/sso/callback/<client_id>`."
+  de = "Callback-URL, bei Kanidm eingetragen; muss genau `/_matrix/client/unstable/login/sso/callback/<client_id>` sein."
+
+  [[file.field]]
+  key = "global.identity_provider.scope"
+  type = "list"
+  default = '["openid", "profile", "email"]'
+  en = "Requested OIDC scopes."
+  de = "Angeforderte OIDC-Bereiche."
