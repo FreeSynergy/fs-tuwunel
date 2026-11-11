@@ -49,8 +49,8 @@ path = "config/tuwunel.toml"
   key = "global.database.pool.max_workers"
   type = "integer"
   default = "256"
-  en = "Upper limit of database worker threads. Upstream default is up to 2048, which exceeds a container's default task limit and stops the start with os error 11. Raise it together with the task limit."
-  de = "Obergrenze der Datenbank-Arbeitsthreads. Der Standard des Herstellers liegt bei bis zu 2048 und übersteigt das Standard-Aufgabenlimit eines Containers; der Start bricht mit os error 11 ab. Nur zusammen mit dem Aufgabenlimit erhöhen."
+  en = "Upper limit of the database worker threads in total. Upstream allows up to 2048 (default per worker pool: 4 times the CPU threads, clamped to 32..1024); on a large host that exceeded a container's default task limit and stopped the start with os error 11. Raise it together with the task limit."
+  de = "Obergrenze der Datenbank-Arbeitsthreads insgesamt. Der Hersteller erlaubt bis zu 2048 (Standard je Pool: das Vierfache der CPU-Threads, begrenzt auf 32 bis 1024); auf einem großen Rechner überstieg das das Standard-Aufgabenlimit eines Containers, und der Start brach mit os error 11 ab. Nur zusammen mit dem Aufgabenlimit erhöhen."
 
   [[file.field]]
   key = "global.registration.enable"

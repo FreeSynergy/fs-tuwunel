@@ -22,9 +22,10 @@ client = "https://${vault:fs/tuwunel/domain}"
 [global.rocksdb]
 direct_io = false
 
-# Cap the database worker threads. The default is 2048 workers on a 32-thread host, which exceeds the default task limit of a container
-# (podman --pids-limit 2048) and then fails at start with "Resource temporarily unavailable (os error 11)". 256 is plenty for a
-# small server. Raise it only on large machines and then raise the task limit (systemd TasksMax, container --pids-limit) with it.
+# Cap the database worker threads. Upstream's default is four times the CPU thread count, clamped to 32..1024, and the sum over all
+# worker groups may reach 2048 (`max_workers`). On a 32-thread host that exceeded the default task limit of a container
+# (podman --pids-limit 2048) and the start failed with "Resource temporarily unavailable (os error 11)". 256 is plenty for a small
+# server. Raise it only on large machines and then raise the task limit (systemd TasksMax, container --pids-limit) with it.
 [global.database.pool]
 max_workers = 256
 

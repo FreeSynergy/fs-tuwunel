@@ -58,7 +58,7 @@
   "files": [
     {
       "path": "config/tuwunel.toml",
-      "sha256": "e29bbeb4d7dbd95afaac71c3675d89e17683b03f8d2d3c50c9b00d57a6472d8d",
+      "sha256": "2871cb0ade905a42b817af04362d8aa5ec3cff3ec23a6b453cdb18206d9aa6fa",
       "placeholders": [
         "fs/kanidm/domain",
         "fs/tuwunel/domain",
