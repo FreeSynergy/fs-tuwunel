@@ -17,6 +17,18 @@ port = [8008]
 [global.well_known]
 client = "https://${vault:fs/tuwunel/domain}"
 
+# Direct I/O off: all data lives on a ZFS mirror under /srv/freesynergy, and upstream advises `direct_io = false` on ZFS and on
+# file systems without direct I/O (tmpfs, FUSE). Documented in tuwunel-example.toml, section [global.rocksdb].
+[global.rocksdb]
+direct_io = false
+
+# Cap the database worker threads. Upstream's default is four times the CPU thread count, clamped to 32..1024, and the sum over all
+# worker groups may reach 2048 (`max_workers`). On a 32-thread host that exceeded the default task limit of a container
+# (podman --pids-limit 2048) and the start failed with "Resource temporarily unavailable (os error 11)". 256 is plenty for a small
+# server. Raise it only on large machines and then raise the task limit (systemd TasksMax, container --pids-limit) with it.
+[global.database.pool]
+max_workers = 256
+
 # Accounts come from the login service (Kanidm, single sign-on): no open registration.
 [global.registration]
 enable = false

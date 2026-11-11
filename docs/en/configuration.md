@@ -9,6 +9,8 @@ Public default configuration in `config/tuwunel.toml`. It holds placeholders onl
 | `global.http.listen.address` | list | `["127.0.0.1"]` | no | Listen addresses; loopback, because Zentinel is the public gate. |
 | `global.http.listen.port` | list | `[8008]` | no | Listen ports. |
 | `global.well_known.client` | string | - | no | Public client URL for Matrix discovery. Domain from the vault (not a secret). |
+| `global.rocksdb.direct_io` | boolean | `false` | no | RocksDB direct I/O. Off because the data directory is on ZFS (upstream advises false on ZFS and on file systems without direct I/O). |
+| `global.database.pool.max_workers` | integer | `256` | no | Upper limit of the database worker threads in total. Upstream allows up to 2048 (default per worker pool: 4 times the CPU threads, clamped to 32..1024); on a large host that exceeded a container's default task limit and stopped the start with os error 11. Raise it together with the task limit. |
 | `global.registration.enable` | boolean | `false` | no | Open password registration. Off: accounts come from Kanidm. |
 | `global.telemetry.sentry.enable` | boolean | `false` | no | Sentry error reporting (compiled into default builds). Stays off. |
 | `global.identity_provider.client_id` | string | `tuwunel` | no | OAuth2 client name registered in Kanidm. |

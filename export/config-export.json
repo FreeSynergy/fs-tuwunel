@@ -58,9 +58,8 @@
   "files": [
     {
       "path": "config/tuwunel.toml",
-      "sha256": "babed5ed4e6d1a61e444fa5b43621460a25beb2d2179b125a103c7255067f4e2",
+      "sha256": "2871cb0ade905a42b817af04362d8aa5ec3cff3ec23a6b453cdb18206d9aa6fa",
       "placeholders": [
-        "...",
         "fs/kanidm/domain",
         "fs/tuwunel/domain",
         "fs/tuwunel/oidc-client-secret#file",
@@ -108,6 +107,22 @@
       "default": null,
       "secret": false,
       "vault": "fs/tuwunel/domain"
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.rocksdb.direct_io",
+      "type": "boolean",
+      "default": "false",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.database.pool.max_workers",
+      "type": "integer",
+      "default": "256",
+      "secret": false,
+      "vault": null
     },
     {
       "file": "config/tuwunel.toml",

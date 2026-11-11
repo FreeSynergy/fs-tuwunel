@@ -39,6 +39,20 @@ path = "config/tuwunel.toml"
   de = "Öffentliche Client-URL für die Matrix-Erkennung. Domain aus dem Tresor (kein Geheimnis)."
 
   [[file.field]]
+  key = "global.rocksdb.direct_io"
+  type = "boolean"
+  default = "false"
+  en = "RocksDB direct I/O. Off because the data directory is on ZFS (upstream advises false on ZFS and on file systems without direct I/O)."
+  de = "Direct I/O von RocksDB. Aus, weil das Datenverzeichnis auf ZFS liegt (der Hersteller rät dort zu false, ebenso bei Dateisystemen ohne Direct I/O)."
+
+  [[file.field]]
+  key = "global.database.pool.max_workers"
+  type = "integer"
+  default = "256"
+  en = "Upper limit of the database worker threads in total. Upstream allows up to 2048 (default per worker pool: 4 times the CPU threads, clamped to 32..1024); on a large host that exceeded a container's default task limit and stopped the start with os error 11. Raise it together with the task limit."
+  de = "Obergrenze der Datenbank-Arbeitsthreads insgesamt. Der Hersteller erlaubt bis zu 2048 (Standard je Pool: das Vierfache der CPU-Threads, begrenzt auf 32 bis 1024); auf einem großen Rechner überstieg das das Standard-Aufgabenlimit eines Containers, und der Start brach mit os error 11 ab. Nur zusammen mit dem Aufgabenlimit erhöhen."
+
+  [[file.field]]
   key = "global.registration.enable"
   type = "boolean"
   default = "false"
