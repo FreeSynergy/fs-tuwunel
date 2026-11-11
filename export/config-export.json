@@ -58,7 +58,7 @@
   "files": [
     {
       "path": "config/tuwunel.toml",
-      "sha256": "2871cb0ade905a42b817af04362d8aa5ec3cff3ec23a6b453cdb18206d9aa6fa",
+      "sha256": "ead9ac3e43bde6a92cac9926143c0a859d9616b01b521c649e0bee9100a9c363",
       "placeholders": [
         "fs/kanidm/domain",
         "fs/tuwunel/domain",
@@ -134,6 +134,14 @@
     },
     {
       "file": "config/tuwunel.toml",
+      "key": "global.registration.grant_admin_to_first_user",
+      "type": "boolean",
+      "default": "false",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
       "key": "global.telemetry.sentry.enable",
       "type": "boolean",
       "default": "false",
@@ -171,6 +179,22 @@
       "default": null,
       "secret": false,
       "vault": "fs/tuwunel/domain"
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.identity_provider.userid_claims",
+      "type": "list",
+      "default": "[\"preferred_username\"]",
+      "secret": false,
+      "vault": null
+    },
+    {
+      "file": "config/tuwunel.toml",
+      "key": "global.identity_provider.unique_id_fallbacks",
+      "type": "boolean",
+      "default": "false",
+      "secret": false,
+      "vault": null
     },
     {
       "file": "config/tuwunel.toml",
